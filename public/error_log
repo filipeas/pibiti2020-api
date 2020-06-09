@@ -1,0 +1,2 @@
+[08-May-2020 21:09:30] PHP Warning:  Unexpected character in input:  '\' (ASCII=92) state=1 in /home2/camica36/API/public/index.php on line 52
+[08-May-2020 21:09:30] PHP Parse error:  syntax error, unexpected T_STRING in /home2/camica36/API/public/index.php on line 52
