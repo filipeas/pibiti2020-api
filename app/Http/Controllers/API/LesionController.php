@@ -10,6 +10,8 @@ use App\Http\Resources\Lesion as LesionResource;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class LesionController extends BaseController
 {
@@ -87,12 +89,25 @@ class LesionController extends BaseController
 
         // call script python for processing new image and save the image classified and your statistic data.
 
+        $primeiro = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/";
+        $segundo = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->original_image}";
+        $terceiro = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->checked_image}";
+        $result = shell_exec("python /home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/runTests.py {$primeiro} {$segundo} {$terceiro} 2>&1 &");
+        // dd($result);
+        $result2 = strstr($result, 'Result = ');
+        $result3 = strstr($result2, ' Fim', true);
+        $result3 = strstr($result3, '  ');
+        $result3 = str_replace(' ', '', $result3);
+        $result3 = str_replace('][', '] [', $result3);
+
+        $result4 = explode(' ', $result3);
+
         // $lesion->classified_image = ;
-        // $lesion->accuracy = ;
-        // $lesion->sensitivity = ;
-        // $lesion->specificity = ;
-        // $lesion->dice = ;
-        // $lesion->save();
+        $lesion->accuracy = $result4[0];
+        $lesion->sensitivity = $result4[1];
+        $lesion->specificity = $result4[2];
+        $lesion->dice = $result4[3];
+        $lesion->save();
 
         return $this->sendResponse(new LesionResource($lesion), 'Lesion created successfully. Now let\'s process it for future manipulations.');
     }
@@ -122,9 +137,9 @@ class LesionController extends BaseController
             return $this->sendError('Lesions not found.');
         }
 
-        foreach($lesions as $key => $value){
-            $value->original_image = asset('storage'.$value->original_image);
-            $value->checked_image = asset('storage'.$value->checked_image);
+        foreach ($lesions as $key => $value) {
+            $value->original_image = asset('storage' . $value->original_image);
+            $value->checked_image = asset('storage' . $value->checked_image);
         }
 
         return $this->sendResponse($lesions, 'Lesions retrieved successfully.');

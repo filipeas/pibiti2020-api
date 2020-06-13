@@ -1,5 +1,39 @@
 * API para o aplicativo de captura de lesões – LIMCI
 
+* Configurações
+
+## Configurações iniciais
+
+O camicase foi construído sobre o framework Laravel. É impresindível manter o código sempre atualizado e funcional, no entanto, os servidores compartilhados que estão sendo usados no momento para rodar esse sistema não são atualizados, necessitando de configurações para funcionar. Assim, é necessário:
+
+- Instalar php 7.3 no servidor.
+- Instalar composer.
+- Instalar git.
+
+Após essas configurações básicas, na pasta App/Providers, abra a classe AppServiceProvider, dentro do método boot adicione o seguinte:
+``` \Illuminate\Support\Facades\Schema::defaultStringLength(191); ```
+Essa configuração só é necessária caso o mysql esteja em versões menores que 5.7.
+
+No servidor da Hostgator é necessário inserir o seguinte comando no .htaccess da pasta public do projeto:
+``` <IfModule mime_module> AddHandler application/x-httpd-ea-php73 .php .php7 .phtml </IfModule>  ```
+Esse comando irá setar o php 7.3 á execução do projeto.
+
+## Comandos após a finalização das configurações básicas
+``` composer install ``` <br>
+``` npm run dev ``` <br>
+``` php artisan key:generate ``` <br>
+``` php artisan migrate ``` <br>
+``` php artisan passport:install ``` <br>
+``` php artisan storage:link ``` <br>
+
+OBS: Ao rodar composer install o laravel talvez pessa algumas extensões, como php-xml. Caso isso ocorra, realizar a seguinte sequência de instalação no terminal:
+
+``` sudo apt-get update ``` <br>
+``` sudo apt install php-xml ``` <br>
+``` sudo apt-get install php-mbstring ``` <br>
+
+Logo após isso, basta rodar composer update ou composer install.
+
 * Descrição
 
 Essa API possui todas as rotas necessárias para que o aplicativo exerça suas principais funções, listadas abaixo:
