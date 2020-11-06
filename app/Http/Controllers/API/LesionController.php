@@ -89,10 +89,10 @@ class LesionController extends BaseController
 
         // call script python for processing new image and save the image classified and your statistic data.
 
-        $primeiro = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/";
-        $segundo = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->original_image}";
-        $terceiro = "/home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->checked_image}";
-        $result = shell_exec("python /home/monstro/Documents/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/runTests.py {$primeiro} {$segundo} {$terceiro} 2>&1 &");
+        $primeiro = "/home/monstro/Documentos/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/";
+        $segundo = "/home/monstro/Documentos/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->original_image}";
+        $terceiro = "/home/monstro/Documentos/Workspace/Laravel/pibiti2020-api/public/storage{$lesion->checked_image}";
+        $result = shell_exec("python /home/monstro/Documentos/Workspace/Laravel/pibiti2020-api/public/storage/uploads/Script/runTests.py {$primeiro} {$segundo} {$terceiro} 2>&1 &");
         // dd($result);
         $result2 = strstr($result, 'Result = ');
         $result3 = strstr($result2, ' Fim', true);

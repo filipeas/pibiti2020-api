@@ -34,6 +34,10 @@ OBS: Ao rodar composer install o laravel talvez pessa algumas extensões, como p
 
 Logo após isso, basta rodar composer update ou composer install.
 
+* PS1: Caso queira executar o projeto na rede local para abrir o App pelo celular e deixar a API rodando no computador, execute o comando ``` php artisan serve --host=ip_da_maquina ```. Esse comando irá por padrão usar a porta 8000. Lembre-se de liberar acesso as portas pelo firewall do computador. Caso queira, se estiver usando linux e apache2, crie uma regra de liberação para a porta 8000 usando o comando ``` sudo ufw allow 8000 ```.
+
+* PS2: Quando for executar a função de segmentação da lesão, verificar o caminho do script dentro da API (deve ser feito a atualização das variáveis que guardam o caminho).
+
 * Descrição
 
 Essa API possui todas as rotas necessárias para que o aplicativo exerça suas principais funções, listadas abaixo:
